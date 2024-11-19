@@ -22,30 +22,41 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
-        targetRB = GetComponent<Rigidbody2D>();
+        targetRB = target.gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
         inputMovePlayer = playerInput.actions["Move"].ReadValue<Vector2>();
         inputMousePosition = playerInput.actions["LookAt"].ReadValue<Vector2>();
+        Debug.Log(inputMousePosition);
         // Detectar si se realiza una acción con el mouse o el teclado
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame)
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame /* || Mouse.current.wasUpdatedThisFrame*/)
         {
             currentInputDevice = InputDevice.KeyboardMouse;
             Debug.Log("Dispositivo actual: Teclado y Mouse");
         }
         // Detectar si se realiza una acción con el joystick
-        else if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
+        else if (Gamepad.current != null && Gamepad.current.leftStick.magnitude != 0 && Gamepad.current.rightStick.magnitude != 0)
         {
             currentInputDevice = InputDevice.Gamepad;
+        
             Debug.Log("Dispositivo actual:Gamepad");
         }
 
-        
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        target.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
-        RotatePlayerTowards(mousePosition);
+        if (currentInputDevice == InputDevice.KeyboardMouse)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            target.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
+            RotatePlayerTowards(mousePosition);
+        }
+        else if(currentInputDevice == InputDevice.Gamepad) 
+        {
+            Vector2 movementTarget = new Vector2(inputMousePosition.x, inputMousePosition.y) * force;
+            targetRB.velocity = movementTarget;
+            RotatePlayerTowards(target.gameObject.transform.position);
+        }
+
     }
 
     void RotatePlayerTowards(Vector3 targetPosition)
@@ -58,13 +69,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         Vector2 movement = new Vector2(inputMovePlayer.x, inputMovePlayer.y) * force;
         rb2d.velocity = movement;
-        if (currentInputDevice == InputDevice.Gamepad)
-        {
-            Vector2 movementTarget = new Vector2(inputMousePosition.x, inputMousePosition.y) * force;
-            targetRB.velocity = movementTarget;
-        }
     }
 
     public void InteractWithElements(InputAction.CallbackContext callback)

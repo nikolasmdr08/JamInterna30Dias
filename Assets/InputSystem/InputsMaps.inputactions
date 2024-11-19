@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "1ba65a9d-fb9d-4461-a63e-043f249bedbb",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -25,7 +25,7 @@
                 },
                 {
                     "name": "LookAt",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "97ad39aa-ed1f-4da2-8601-45c1ebdc0f2e",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -46,7 +46,18 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "",
+                    "id": "a9474891-8c27-45d8-877b-c6d485f306c2",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";GamePad",
+                    "action": "InteractWithElement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "WASD",
                     "id": "8ed4f383-d705-42ac-ba8b-56714dc0480c",
                     "path": "2DVector",
                     "interactions": "",
@@ -102,6 +113,17 @@
                 },
                 {
                     "name": "",
+                    "id": "87a8c93b-4035-433b-ad66-9548649abb2d",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";GamePad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "44153e9a-f0bc-43a2-98fa-d96d6083d69f",
                     "path": "<Mouse>/position",
                     "interactions": "",
@@ -110,9 +132,43 @@
                     "action": "LookAt",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9926a430-2cbf-48f4-8993-177168b41b06",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";GamePad",
+                    "action": "LookAt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "keyboard",
+            "bindingGroup": "keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "GamePad",
+            "bindingGroup": "GamePad",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }
