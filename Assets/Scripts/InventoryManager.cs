@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -8,64 +9,34 @@ public class InventoryManager : MonoBehaviour
 
     public UsableTools playerTools;
 
+    public GameObject fabricarPanel;
 
-    // Estructura para representar un item
-    [System.Serializable]
-    public struct Tool
-    {
-        public string nombre;
-        public int[] recursosRequeridos; // Indices corresponden a recursos en el diccionario
-        public int cantidadRequerida; // Cantidad requerida de cada recurso
-        public GameObject prefab; // Prefab del item
-    }
+    public GameObject toolSlotPrefab;
 
-    // Método para agregar recursos al inventario
-    public void AgregarRecurso(string nombre, int cantidad)
-    {
-        //if (recursos.ContainsKey(nombre))
-        //{
-        //    recursos[nombre] += cantidad;
-        //}
-        //else
-        //{
-        //    recursos.Add(nombre, cantidad);
-        //}
-    }
+    public List<Sprite> toolIcons;
 
     // Método para fabricar un item
-    public bool FabricarItem(string nombreItem)
+    public void FabricarItem(string nombreTool)
     {
-        //if (items.ContainsKey(nombreItem))
-        //{
-        //    Tool item = items[nombreItem];
-        //    bool tieneRecursos = true;
 
-        //    // Verificar si se tienen los recursos necesarios
-        //    for (int i = 0; i < item.recursosRequeridos.Length; i++)
-        //    {
-        //        string recurso = item.recursosRequeridos[i].ToString();
-        //        if (!recursos.ContainsKey(recurso) || recursos[recurso] < item.cantidadRequerida)
-        //        {
-        //            tieneRecursos = false;
-        //            break;
-        //        }
-        //    }
+        GameObject toolUI = Instantiate(toolSlotPrefab, playerTools.InventoryUIPanel.transform);
+        toolUI.GetComponent<ToolSlot>().toolName = nombreTool;
+        //toolUI.GetComponent<ToolSlot>().toolImage.color = Color.red;
+        if (nombreTool == "Granada") 
+        {
+            toolUI.GetComponent<ToolSlot>().toolImage.sprite = toolIcons[0];
+        }
+        if (nombreTool == "Humo")
+        {
+            toolUI.GetComponent<ToolSlot>().toolImage.sprite = toolIcons[1];
+        }
 
-        //    // Si se tienen los recursos, restarlos y crear el item
-        //    if (tieneRecursos)
-        //    {
-        //        for (int i = 0; i < item.recursosRequeridos.Length; i++)
-        //        {
-        //            string recurso = item.recursosRequeridos[i].ToString();
-        //           // recursos[recurso] -= item.cantidadRequerida;
-        //        }
+        if (nombreTool == "Flash")
+        {
+            toolUI.GetComponent<ToolSlot>().toolImage.sprite = toolIcons[2];
+        }
 
-        //        // Instanciar el prefab del item
-        //        GameObject itemInstanciado = Instantiate(item.prefab);
-        //        return true;
-        //    }
-        //}
+        playerResources.ActualizarRecursosEnUI();
 
-        return false;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class UsableTools : MonoBehaviour
 {
+    public GameObject InventoryUIPanel;
+    public List<GameObject> usableTools;
+
     // Start is called before the first frame update
     void Start()
     {
