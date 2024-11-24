@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 679806641858648721}
   - component: {fileID: 6814586388762587350}
   - component: {fileID: 5889792502461926567}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ObjetoTest
   m_TagString: Interactive
   m_Icon: {fileID: 0}

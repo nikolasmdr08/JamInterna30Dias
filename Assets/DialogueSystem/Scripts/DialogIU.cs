@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class DialogIU : MonoBehaviour
 {
@@ -29,114 +27,89 @@ public class DialogIU : MonoBehaviour
         anteriorBTN.gameObject.SetActive(false);
     }
 
-    void Update()
+    /*void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q)){
             ActualizarTextos(1);
         }
-    }
+    }*/
 
-    public void ActualizarTextos(int comportamiento){
+    public void ActualizarTextos(int comportamiento)
+    {
+        if (comportamiento < -1 || comportamiento > 1)
+        {
+            Debug.LogWarning("Valor no admitido (solo se acepta -1, 0, 1).");
+            return;
+        }
+
         convContainer.SetActive(true);
         pregContainer.SetActive(false);
-        switch (comportamiento)
+
+        if (comportamiento == -1 && localIn > 0)
         {
-            case -1:
-                if (localIn > 0)
-                {
-                    print("Dialogo anterior");
-                    localIn--;
-
-                    nombre.text = conversacion.dialogos[localIn].personaje.nombre;
-                    //StopAllCoroutines();
-                    //StartCoroutine(EscribirTexto());
-                    convText.text = conversacion.dialogos[localIn].dialogo;
-                    speakIn.sprite = conversacion.dialogos[localIn].personaje.imagen;
-
-                    if (conversacion.dialogos[localIn].sonido != null)
-                    {
-                        audioSource.Stop();
-                        var audio = conversacion.dialogos[localIn].sonido;
-                        audioSource.PlayOneShot(audio);
-                    }
-                    anteriorBTN.gameObject.SetActive(localIn > 0);
-                }
-                DialogManager.speakerActual.dialLocalIn = localIn;
-                break;
-            case 0:
-                print("Dialogo Actualizado");
-                nombre.text = conversacion.dialogos[localIn].personaje.nombre;
-                //StopAllCoroutines();
-                //StartCoroutine(EscribirTexto());
-                convText.text = conversacion.dialogos[localIn].dialogo;
-                speakIn.sprite = conversacion.dialogos[localIn].personaje.imagen;
-
-                if (conversacion.dialogos[localIn].sonido != null)
-                {
-                    audioSource.Stop();
-                    var audio = conversacion.dialogos[localIn].sonido;
-                    audioSource.PlayOneShot(audio);
-                }
-                anteriorBTN.gameObject.SetActive(localIn > 0);
-                if(localIn >= conversacion.dialogos.Length - 1)
-                {
-                    continuarBTN.GetComponentInChildren<TextMeshProUGUI>().text = "Finalizar";
-                }
-                else
-                {
-                    continuarBTN.GetComponentInChildren<TextMeshProUGUI>().text = "Continuar";
-                }
-                break;
-            case 1:
-                if(localIn < conversacion.dialogos.Length - 1)
-                {
-                    print("Dialogo siguiente");
-                    localIn++;
-                    nombre.text = conversacion.dialogos[localIn].personaje.nombre;
-                    //StopAllCoroutines();
-                    //StartCoroutine(EscribirTexto());
-                    convText.text = conversacion.dialogos[localIn].dialogo;
-                    speakIn.sprite = conversacion.dialogos[localIn].personaje.imagen;
-
-                    if (conversacion.dialogos[localIn].sonido != null)
-                    {
-                        audioSource.Stop();
-                        var audio = conversacion.dialogos[localIn].sonido;
-                        audioSource.PlayOneShot(audio);
-                    }
-                    anteriorBTN.gameObject.SetActive(localIn > 0);
-                    if (localIn >= conversacion.dialogos.Length - 1)
-                    {
-                        continuarBTN.GetComponentInChildren<TextMeshProUGUI>().text = "Finalizar";
-                    }
-                    else
-                    {
-                        continuarBTN.GetComponentInChildren<TextMeshProUGUI>().text = "Continuar";
-                    }
-                }
-                else
-                {
-                    print("Dialogo terminado");
-                    localIn = 0;
-                    DialogManager.speakerActual.dialLocalIn = 0;
-                    conversacion.finalizado = true;
-                    if (conversacion.pregunta != null)
-                    {
-                        convContainer.SetActive(false);
-                        pregContainer.SetActive(true);
-                        var preg = conversacion.pregunta;
-                        DialogManager.instance.controladorPreguntas.ActivarBotones(preg.opciones.Length,preg.pregunta,preg.opciones);
-                        return;
-                    }
-                    DialogManager.instance.MostrarUI(false);
-                    return;
-                }
-                DialogManager.speakerActual.dialLocalIn = localIn;
-                break;
-            default:
-                Debug.LogWarning("Estas pasando un valor no admitido (solo se acepta estos valores (-1, 0, 1).)");
-                break;
+            print("Diálogo anterior");
+            localIn--;
         }
+        else if (comportamiento == 1 && localIn < conversacion.dialogos.Length - 1)
+        {
+            print("Diálogo siguiente");
+            localIn++;
+        }
+        else if (comportamiento == 1)
+        {
+            print("Diálogo terminado");
+            FinalizarDialogo();
+            return;
+        }
+        else if (comportamiento == 0)
+        {
+            print("Diálogo Actualizado");
+        }
+
+        ActualizarDialogo();
+        anteriorBTN.gameObject.SetActive(localIn > 0);
+        continuarBTN.GetComponentInChildren<TextMeshProUGUI>().text =
+            localIn >= conversacion.dialogos.Length - 1 ? "Finalizar" : "Continuar";
+
+        DialogManager.speakerActual.dialLocalIn = localIn;
+    }
+
+    private void ActualizarDialogo()
+    {
+        var dialogoActual = conversacion.dialogos[localIn];
+        nombre.text = dialogoActual.personaje.nombre;
+        convText.text = dialogoActual.dialogo;
+        speakIn.sprite = dialogoActual.personaje.imagen;
+
+        // Actualizar opacidad de la imagen del personaje
+        Color color = speakIn.color;
+        color.a = dialogoActual.personaje.imagen != null ? 1f : 0f;
+        speakIn.color = color;
+
+        // Reproducir sonido del diálogo
+        if (dialogoActual.sonido != null)
+        {
+            audioSource.Stop();
+            audioSource.PlayOneShot(dialogoActual.sonido);
+        }
+    }
+
+    private void FinalizarDialogo()
+    {
+        localIn = 0;
+        DialogManager.speakerActual.dialLocalIn = 0;
+        conversacion.finalizado = true;
+
+        if (conversacion.pregunta != null)
+        {
+            convContainer.SetActive(false);
+            pregContainer.SetActive(true);
+            var preg = conversacion.pregunta;
+            DialogManager.instance.controladorPreguntas.ActivarBotones(preg.opciones.Length, preg.pregunta, preg.opciones);
+            return;
+        }
+
+        DialogManager.instance.MostrarUI(false);
     }
 
     IEnumerator EscribirTexto()

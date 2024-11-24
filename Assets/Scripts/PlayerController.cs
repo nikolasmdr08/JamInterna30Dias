@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 public class PlayerController : MonoBehaviour
 {
-    bool colitionWithInteractiveElement = false;
     [SerializeField] float force = 10;
     Rigidbody2D rb2d;
     Rigidbody2D targetRB;
@@ -14,6 +11,14 @@ public class PlayerController : MonoBehaviour
     Vector2 inputMovePlayer;
     Vector2 inputMousePosition;
     public GameObject target;
+    public GameObject panelInfo;
+    public TextMeshProUGUI textPanelInfo;
+    public bool colitionWithInteractiveElement = false;
+    public bool colitionWithTalkeableElement = false;
+    public bool buttonPressed = false;
+    public bool showInfo = false;
+    private string textInfo;
+    public bool onDialog = false;
 
     private enum InputDevice { None, KeyboardMouse, Gamepad }
     private InputDevice currentInputDevice = InputDevice.None;
@@ -27,36 +32,42 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        inputMovePlayer = playerInput.actions["Move"].ReadValue<Vector2>();
-        inputMousePosition = playerInput.actions["LookAt"].ReadValue<Vector2>();
-        Debug.Log(inputMousePosition);
-        // Detectar si se realiza una acción con el mouse o el teclado
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame /* || Mouse.current.wasUpdatedThisFrame*/)
+        if (!onDialog)
         {
-            currentInputDevice = InputDevice.KeyboardMouse;
-            Debug.Log("Dispositivo actual: Teclado y Mouse");
-        }
-        // Detectar si se realiza una acción con el joystick
-        else if (Gamepad.current != null && Gamepad.current.leftStick.magnitude != 0 && Gamepad.current.rightStick.magnitude != 0)
-        {
-            currentInputDevice = InputDevice.Gamepad;
-        
-            Debug.Log("Dispositivo actual:Gamepad");
+            inputMovePlayer = playerInput.actions["Move"].ReadValue<Vector2>();
+            inputMousePosition = playerInput.actions["LookAt"].ReadValue<Vector2>();
+            if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame /* || Mouse.current.wasUpdatedThisFrame*/)
+            {
+                currentInputDevice = InputDevice.KeyboardMouse;
+            }
+            else if (Gamepad.current != null && Gamepad.current.leftStick.magnitude != 0 && Gamepad.current.rightStick.magnitude != 0)
+            {
+                currentInputDevice = InputDevice.Gamepad;
+            }
+
+            if (currentInputDevice == InputDevice.KeyboardMouse)
+            {
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                target.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
+                RotatePlayerTowards(mousePosition);
+            }
+            else if(currentInputDevice == InputDevice.Gamepad) 
+            {
+                Vector2 movementTarget = new Vector2(inputMousePosition.x, inputMousePosition.y) * force;
+                targetRB.velocity = movementTarget;
+                RotatePlayerTowards(target.gameObject.transform.position);
+            }
         }
 
-        if (currentInputDevice == InputDevice.KeyboardMouse)
+        if (showInfo)
         {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            target.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
-            RotatePlayerTowards(mousePosition);
+            panelInfo.SetActive(true);
+            textPanelInfo.text = textInfo;
         }
-        else if(currentInputDevice == InputDevice.Gamepad) 
+        else
         {
-            Vector2 movementTarget = new Vector2(inputMousePosition.x, inputMousePosition.y) * force;
-            targetRB.velocity = movementTarget;
-            RotatePlayerTowards(target.gameObject.transform.position);
+            panelInfo.SetActive(false);
         }
-
     }
 
     void RotatePlayerTowards(Vector3 targetPosition)
@@ -76,34 +87,64 @@ public class PlayerController : MonoBehaviour
 
     public void InteractWithElements(InputAction.CallbackContext callback)
     {
+        //Debug.Log(callback.phase);
         if (callback.performed)
         {
             if (colitionWithInteractiveElement)
             {
                 Debug.Log("Objeto interactuable");
+                buttonPressed = true;
+                showInfo = false;
             }
-            else
+            if (colitionWithTalkeableElement)
             {
-                Debug.Log("Objeto no interactuable");
+                Debug.Log("NPC interactuable");
+                buttonPressed = true;
+                showInfo = false;
             }
+        }
+        if (callback.canceled)
+        {
+            buttonPressed = false;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("colisionar con " + col.name);
-        if (col.gameObject.tag == "Interactive")
+        Debug.Log("colisionar con " + collision.name);
+        if (collision.gameObject.tag == "Interactive")
         {
-            colitionWithInteractiveElement = true;
+            if(collision.gameObject.layer == 6)
+            {
+                Debug.Log("NPC true ");
+                colitionWithTalkeableElement = true;
+                showInfo = true;
+                textInfo = "Hablar";
+            }
+            if (collision.gameObject.layer == 7)
+            {
+                Debug.Log("OBJETO true ");
+                colitionWithInteractiveElement = true;
+                showInfo = true;
+                textInfo = "Agarrar";
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         Debug.Log("dejo de colisionar con " + other.name);
-        if (other.gameObject.tag == "Interactive")
+        if (other.gameObject.layer == 6)
         {
+            Debug.Log("NPC false ");
+            colitionWithTalkeableElement = false;
+            showInfo = false;
+        }
+        if (other.gameObject.layer == 7)
+        {
+            Debug.Log("OBJETO false ");
             colitionWithInteractiveElement = false;
+            showInfo = false;
         }
     }
 }

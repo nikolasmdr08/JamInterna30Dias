@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityExtensions;
 
 [CreateAssetMenu(fileName ="Conversacion",menuName ="Sistema de Dialogos/Nueva Conversacion")]
 public class Conversacion : ScriptableObject

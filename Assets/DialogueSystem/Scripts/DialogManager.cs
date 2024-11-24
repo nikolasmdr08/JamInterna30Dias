@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogManager : MonoBehaviour
@@ -9,7 +6,7 @@ public class DialogManager : MonoBehaviour
     public static DialogSpeaker speakerActual;
     [SerializeField] DialogIU dialUI;
     [SerializeField] GameObject player;
-    public ControladorPreguntas controladorPreguntas;
+    [SerializeField] public ControladorPreguntas controladorPreguntas;
 
     private void Awake()
     {
@@ -23,14 +20,23 @@ public class DialogManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        dialUI = FindObjectOfType<DialogIU>();
-        controladorPreguntas = FindObjectOfType<ControladorPreguntas>();
+        GameObject uiObject = GameObject.Find("DialogueUI");
+        if (uiObject != null)
+        {
+            dialUI = uiObject.GetComponent<DialogIU>();
+        }
+
+        GameObject preguntasObject = GameObject.Find("Preguntas");
+        if (preguntasObject != null)
+        {
+            controladorPreguntas = preguntasObject.GetComponent<ControladorPreguntas>();
+        }
+
     }
 
     void Start()
     {
         MostrarUI(false);
-        //player.GetComponent<DialogSpeaker>().Conversar();
     }
 
     public void MostrarUI(bool mostrar)
@@ -74,6 +80,11 @@ public class DialogManager : MonoBehaviour
     public void BloqueoYDesbloqueoDeConversacion(Conversacion conv, bool desbloquear)
     {
         conv.desbloqueada = desbloquear;
+    }
+
+    public void nextDialog()
+    {
+        dialUI.ActualizarTextos(1);
     }
 
 }

@@ -1,14 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityExtensions;
 
 public class DialogSpeaker : MonoBehaviour
 {
     /*[ReorderableList]*/[SerializeField] public List<Conversacion> conversacionesDisponibles = new List<Conversacion>();
     [SerializeField] private int indexConversaciones = 0;
     public int dialLocalIn = 0;
+    bool enConversacion = false;
 
     void Start()
     {
@@ -32,12 +30,28 @@ public class DialogSpeaker : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E)){
-            Conversar();
+        Debug.Log("colicion: " + collision);
+        if (collision.CompareTag("Player")){
+            var player = collision.gameObject.GetComponent<PlayerController>();
+            Debug.Log("colitionWithTalkeableElement: " + player.colitionWithTalkeableElement);
+            Debug.Log("buttonPressed: " + player.buttonPressed);
+            if (player.colitionWithTalkeableElement && player.buttonPressed)
+            {
+                Debug.Log("enConversacion: " + enConversacion);
+                if (!enConversacion)
+                {
+                    enConversacion = true;
+                    Conversar();
+                }
+                else
+                {
+                    DialogManager.instance.nextDialog();
+                    player.buttonPressed = false;
+                    //DialogManager.instance.CambiarEstadoDeReausable(conversacionesDisponibles[indexConversaciones], !conversacionesDisponibles[indexConversaciones].reUsar);
+                }
+            }
         }
-        if (collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.Z)){
-            DialogManager.instance.CambiarEstadoDeReausable(conversacionesDisponibles[indexConversaciones], !conversacionesDisponibles[indexConversaciones].reUsar);
-        }
+
     }
 
     public void Conversar()
@@ -63,12 +77,15 @@ public class DialogSpeaker : MonoBehaviour
             {
                 Debug.LogWarning("La conversacion esta bloqueada.");
                 DialogManager.instance.MostrarUI(false);
+                enConversacion = false;
+                
             }
         }
         else
         {
             Debug.Log("Fin de dialogo.");
             DialogManager.instance.MostrarUI(false);
+            enConversacion = false;
         }
     }
 
