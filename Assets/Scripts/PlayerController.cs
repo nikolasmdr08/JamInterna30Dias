@@ -36,13 +36,13 @@ public class PlayerController : MonoBehaviour
         {
             inputMovePlayer = playerInput.actions["Move"].ReadValue<Vector2>();
             inputMousePosition = playerInput.actions["LookAt"].ReadValue<Vector2>();
-            if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame /* || Mouse.current.wasUpdatedThisFrame*/)
-            {
-                currentInputDevice = InputDevice.KeyboardMouse;
-            }
-            else if (Gamepad.current != null && Gamepad.current.leftStick.magnitude != 0 && Gamepad.current.rightStick.magnitude != 0)
+            if (Gamepad.current != null && Gamepad.current.leftStick.magnitude != 0 && Gamepad.current.rightStick.magnitude != 0)
             {
                 currentInputDevice = InputDevice.Gamepad;
+            }
+            else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame /* || Mouse.current.wasUpdatedThisFrame*/)
+            {
+                currentInputDevice = InputDevice.KeyboardMouse;
             }
 
             if (currentInputDevice == InputDevice.KeyboardMouse)
