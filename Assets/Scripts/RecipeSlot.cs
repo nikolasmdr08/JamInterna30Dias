@@ -6,7 +6,7 @@ using TMPro;
 
 public class RecipeSlot : MonoBehaviour
 {
-    private Resources resc;
+    private Recursos resc;
     private InventoryManager IM;
 
     public string toolName;
@@ -22,7 +22,7 @@ public class RecipeSlot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        resc = GameObject.FindObjectOfType<Resources>();
+        resc = GameObject.FindObjectOfType<Recursos>();
         IM = GameObject.FindObjectOfType<InventoryManager>();
 
         toolNameText.text = toolName;

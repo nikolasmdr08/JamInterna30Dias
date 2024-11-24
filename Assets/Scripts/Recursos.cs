@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class Resources : MonoBehaviour
+public class Recursos : MonoBehaviour
 {
 
     public List<int> recursos;
