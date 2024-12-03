@@ -16,7 +16,7 @@ public class DialogIU : MonoBehaviour
     [SerializeField] private Button anteriorBTN;
 
     private AudioSource audioSource;
-    public int localIn = 1;
+    public int localIn = 0;
 
     void Start()
     {
@@ -47,23 +47,23 @@ public class DialogIU : MonoBehaviour
 
         if (comportamiento == -1 && localIn > 0)
         {
-            print("Diálogo anterior");
+            print("Diï¿½logo anterior");
             localIn--;
         }
         else if (comportamiento == 1 && localIn < conversacion.dialogos.Length - 1)
         {
-            print("Diálogo siguiente");
+            print("Diï¿½logo siguiente");
             localIn++;
         }
         else if (comportamiento == 1)
         {
-            print("Diálogo terminado");
+            print("Diï¿½logo terminado");
             FinalizarDialogo();
             return;
         }
         else if (comportamiento == 0)
         {
-            print("Diálogo Actualizado");
+            print("Diï¿½logo Actualizado");
         }
 
         ActualizarDialogo();
@@ -86,7 +86,7 @@ public class DialogIU : MonoBehaviour
         color.a = dialogoActual.personaje.imagen != null ? 1f : 0f;
         speakIn.color = color;
 
-        // Reproducir sonido del diálogo
+        // Reproducir sonido del diï¿½logo
         if (dialogoActual.sonido != null)
         {
             audioSource.Stop();
@@ -98,7 +98,10 @@ public class DialogIU : MonoBehaviour
     {
         localIn = 0;
         DialogManager.speakerActual.dialLocalIn = 0;
-        conversacion.finalizado = true;
+        if(conversacion.reUsar)
+            conversacion.finalizado = false;
+        else
+            conversacion.finalizado = true;
 
         if (conversacion.pregunta != null)
         {

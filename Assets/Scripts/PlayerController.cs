@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float force = 10;
-    Rigidbody2D rb2d;
-    Rigidbody2D targetRB;
+    Rigidbody rb2d;
+    Rigidbody targetRB;
     PlayerInput playerInput;
     Vector2 inputMovePlayer;
     Vector2 inputMousePosition;
@@ -21,13 +21,15 @@ public class PlayerController : MonoBehaviour
     public bool onDialog = false;
 
     private enum InputDevice { None, KeyboardMouse, Gamepad }
+
     private InputDevice currentInputDevice = InputDevice.None;
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        targetRB = target.gameObject.GetComponent<Rigidbody2D>();
+        targetRB = target.gameObject.GetComponent<Rigidbody>();
+        RotatePlayerTowards(target.gameObject.transform.position);
     }
 
     void Update()
@@ -36,24 +38,13 @@ public class PlayerController : MonoBehaviour
         {
             inputMovePlayer = playerInput.actions["Move"].ReadValue<Vector2>();
             inputMousePosition = playerInput.actions["LookAt"].ReadValue<Vector2>();
-            if (Gamepad.current != null && Gamepad.current.leftStick.magnitude != 0 && Gamepad.current.rightStick.magnitude != 0)
+            if (Gamepad.current != null && (Gamepad.current.leftStick.magnitude != 0 || Gamepad.current.rightStick.magnitude != 0) && Gamepad.current.wasUpdatedThisFrame)
             {
                 currentInputDevice = InputDevice.Gamepad;
             }
-            else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.anyKey.wasPressedThisFrame /* || Mouse.current.wasUpdatedThisFrame*/)
+            if(currentInputDevice == InputDevice.Gamepad) 
             {
-                currentInputDevice = InputDevice.KeyboardMouse;
-            }
-
-            if (currentInputDevice == InputDevice.KeyboardMouse)
-            {
-                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                target.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
-                RotatePlayerTowards(mousePosition);
-            }
-            else if(currentInputDevice == InputDevice.Gamepad) 
-            {
-                Vector2 movementTarget = new Vector2(inputMousePosition.x, inputMousePosition.y) * force;
+                Vector3 movementTarget = new Vector3(inputMousePosition.x, 0, inputMousePosition.y) * force;
                 targetRB.velocity = movementTarget;
                 RotatePlayerTowards(target.gameObject.transform.position);
             }
@@ -71,34 +62,39 @@ public class PlayerController : MonoBehaviour
     }
 
     void RotatePlayerTowards(Vector3 targetPosition)
-    {
-        Vector3 direction = targetPosition - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+    {;
+        transform.LookAt(targetPosition);
     }
 
     private void FixedUpdate()
     {
-        
-        Vector2 movement = new Vector2(inputMovePlayer.x, inputMovePlayer.y) * force;
+        //move player
+        Vector3 movement = new Vector3(inputMovePlayer.x, 0,inputMovePlayer.y) * force;
         rb2d.velocity = movement;
+        //move target
+        Vector3 movementTarget = new Vector3(inputMousePosition.x, 0, inputMousePosition.y) * force;
+        Vector3 newPosition = targetRB.position + movementTarget * Time.fixedDeltaTime;
+        Vector3 screenBottomLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
+        Vector3 screenTopRight = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.nearClipPlane));
+        newPosition.x = Mathf.Clamp(newPosition.x, screenBottomLeft.x, screenTopRight.x);
+        newPosition.z = Mathf.Clamp(newPosition.z, screenBottomLeft.z, screenTopRight.z);
+        targetRB.velocity = (newPosition - targetRB.position) / Time.fixedDeltaTime;
+        //Debug.Log($"New Position: {newPosition}");
     }
 
     public void InteractWithElements(InputAction.CallbackContext callback)
     {
-        //Debug.Log(callback.phase);
         if (callback.performed)
         {
             if (colitionWithInteractiveElement)
-            {
-                Debug.Log("Objeto interactuable");
+            {//
+                //Debug.Log("Objeto interactuable");
                 buttonPressed = true;
                 showInfo = false;
             }
             if (colitionWithTalkeableElement)
             {
-                Debug.Log("NPC interactuable");
+                //Debug.Log("NPC interactuable");
                 buttonPressed = true;
                 showInfo = false;
             }
@@ -109,21 +105,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("colisionar con " + collision.name);
+        //Debug.Log("colisionar con " + collision.name);
         if (collision.gameObject.tag == "Interactive")
         {
             if(collision.gameObject.layer == 6)
             {
-                Debug.Log("NPC true ");
+                //Debug.Log("NPC true ");
                 colitionWithTalkeableElement = true;
                 showInfo = true;
                 textInfo = "Hablar";
             }
             if (collision.gameObject.layer == 7)
             {
-                Debug.Log("OBJETO true ");
+                //Debug.Log("OBJETO true ");
                 colitionWithInteractiveElement = true;
                 showInfo = true;
                 textInfo = "Agarrar";
@@ -131,18 +127,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit(Collider other)
     {
-        Debug.Log("dejo de colisionar con " + other.name);
+        //Debug.Log("dejo de colisionar con " + other.name);
         if (other.gameObject.layer == 6)
         {
-            Debug.Log("NPC false ");
+            //Debug.Log("NPC false ");
             colitionWithTalkeableElement = false;
             showInfo = false;
         }
         if (other.gameObject.layer == 7)
         {
-            Debug.Log("OBJETO false ");
+            //Debug.Log("OBJETO false ");
             colitionWithInteractiveElement = false;
             showInfo = false;
         }
