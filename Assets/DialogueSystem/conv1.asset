@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: conv1
   m_EditorClassIdentifier: 
   desbloqueada: 1
-  finalizado: 1
-  reUsar: 0
+  finalizado: 0
+  reUsar: 1
   dialogos:
-  - personaje: {fileID: 0}
+  - personaje: {fileID: 11400000, guid: 7c313ac196c584142ae6beb468411070, type: 2}
     dialogo: 
     sonido: {fileID: 0}
   - personaje: {fileID: 11400000, guid: 7c313ac196c584142ae6beb468411070, type: 2}

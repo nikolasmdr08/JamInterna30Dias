@@ -28,7 +28,7 @@ public class DialogSpeaker : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         Debug.Log("colicion: " + collision);
         if (collision.CompareTag("Player")){
