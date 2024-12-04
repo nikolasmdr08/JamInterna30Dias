@@ -30,11 +30,11 @@ public class DialogSpeaker : MonoBehaviour
 
     private void OnTriggerStay(Collider collision)
     {
-        Debug.Log("colicion: " + collision);
+       // Debug.Log("colicion: " + collision);
         if (collision.CompareTag("Player")){
             var player = collision.gameObject.GetComponent<PlayerController>();
-            Debug.Log("colitionWithTalkeableElement: " + player.colitionWithTalkeableElement);
-            Debug.Log("buttonPressed: " + player.buttonPressed);
+            //Debug.Log("colitionWithTalkeableElement: " + player.colitionWithTalkeableElement);
+            //Debug.Log("buttonPressed: " + player.buttonPressed);
             if (player.colitionWithTalkeableElement && player.buttonPressed)
             {
                 Debug.Log("enConversacion: " + enConversacion);
@@ -57,33 +57,37 @@ public class DialogSpeaker : MonoBehaviour
     public void Conversar()
     {
         if(indexConversaciones <= conversacionesDisponibles.Count - 1)
+        //if (conversacionesDisponibles[indexConversaciones].desbloqueada)
         {
             if (conversacionesDisponibles[indexConversaciones].desbloqueada)
+            //if (indexConversaciones <= conversacionesDisponibles.Count -1)
             {
                 if (conversacionesDisponibles[indexConversaciones].finalizado)
                 {
                     if (ActualizarConversacion())
                     {
+                        //Debug.Log("Actualizar conversación");
                         DialogManager.instance.MostrarUI(true);
                         DialogManager.instance.SetConversacion(conversacionesDisponibles[indexConversaciones], this);
                     }
                     DialogManager.instance.SetConversacion(conversacionesDisponibles[indexConversaciones], this);
-                    return;
+
+                    return;  
                 }
                 DialogManager.instance.MostrarUI(true);
                 DialogManager.instance.SetConversacion(conversacionesDisponibles[indexConversaciones], this);
             }
             else
             {
-                Debug.LogWarning("La conversacion esta bloqueada.");
+                Debug.Log("Fin de dialogo.");
+                DialogManager.speakerActual = null;
                 DialogManager.instance.MostrarUI(false);
                 enConversacion = false;
-                
             }
         }
         else
         {
-            Debug.Log("Fin de dialogo.");
+            Debug.LogWarning("La conversacion esta bloqueada.");
             DialogManager.instance.MostrarUI(false);
             enConversacion = false;
         }
@@ -93,7 +97,7 @@ public class DialogSpeaker : MonoBehaviour
     {
         if (!conversacionesDisponibles[indexConversaciones].reUsar)
         {
-            if(indexConversaciones < conversacionesDisponibles.Count - 1)
+            if(indexConversaciones < conversacionesDisponibles.Count -1 )
             {
                 indexConversaciones++;
                 return true;

@@ -4,13 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< Updated upstream
   - Interactive
-=======
-  - Zones
   - NPC
+  - Objeto
+  - Zones
   - MainCharacter
->>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX

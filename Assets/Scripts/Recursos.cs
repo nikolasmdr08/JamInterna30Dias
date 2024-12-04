@@ -22,7 +22,7 @@ public class Recursos : MonoBehaviour
 
     public void obtenerRecursos(int tipo) 
     {
-        int i = Random.Range(1, 4);
+        int i = Random.Range(1, 3);
         Debug.Log("Se han obtenido " + i + " unidades de tipo" + tipo.ToString());
         recursos[tipo] = recursos[tipo] + i;
         recursosUI[tipo].GetComponent<TextMeshProUGUI>().text = recursos[tipo].ToString();

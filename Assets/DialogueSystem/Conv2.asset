@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55f17c1d9e13564faecbc53b07eda9a, type: 3}
+  m_Name: Conv2
+  m_EditorClassIdentifier: 
+  desbloqueada: 1
+  finalizado: 0
+  reUsar: 0
+  dialogos:
+  - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
+    dialogo: ...
+    sonido: {fileID: 0}
+  - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
+    dialogo: me hablas a mi? que que hago aqui?
+    sonido: {fileID: 0}
+  - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
+    dialogo: realizo una investigacion super secreta
+    sonido: {fileID: 0}
+  - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
+    dialogo: "ma\xF1ana me graduo de la escuala de detectives"
+    sonido: {fileID: 0}
+  - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
+    dialogo: "ser\xEDa una lastima cruzarme con alg\xFAn asesino, verdad?"
+    sonido: {fileID: 0}
+  - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
+    dialogo: "no tengo mas tiempo,wd adi\xF3s!!"
+    sonido: {fileID: 0}
+  pregunta: {fileID: 0}

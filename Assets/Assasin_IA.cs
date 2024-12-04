@@ -29,7 +29,7 @@ public class Assasin_IA : MonoBehaviour
         GameTime = 0;
         Agrofeeling = 0;
         ObjetiveZones = GameObject.FindGameObjectsWithTag("Zones");
-        Prota = GameObject.FindGameObjectWithTag("MainCharacter");
+        Prota = GameObject.FindGameObjectWithTag("Player");
 
     }
 

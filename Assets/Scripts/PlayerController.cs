@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
     private string textInfo;
     public bool onDialog = false;
 
+
+    //AGREGADO DE RILOUD, agrego una variable para tener acceso los recursos del jugador
+    public Recursos _recursos;
+
+
+
     private enum InputDevice { None, KeyboardMouse, Gamepad }
 
     private InputDevice currentInputDevice = InputDevice.None;
@@ -30,6 +36,10 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         targetRB = target.gameObject.GetComponent<Rigidbody>();
         RotatePlayerTowards(target.gameObject.transform.position);
+
+        //AGREGADO DE RILOUD, se asigna la variable de los recursos
+        _recursos = FindObjectOfType<Recursos>();
+
     }
 
     void Update()
@@ -91,12 +101,16 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log("Objeto interactuable");
                 buttonPressed = true;
                 showInfo = false;
+
+                //AGREGADO DE RILOUD
+                _recursos.obtenerRecursos(Random.Range(0, 4)); // Obtiene una cantidad entre 1 y 3, de uno solo de los 5 tipos de recursos
             }
             if (colitionWithTalkeableElement)
             {
                 //Debug.Log("NPC interactuable");
                 buttonPressed = true;
                 showInfo = false;
+                onDialog = true; //TESTEAR Y DESCOMENTAR LÍNEA
             }
         }
         if (callback.canceled)

@@ -42,7 +42,11 @@ public class DialogManager : MonoBehaviour
     public void MostrarUI(bool mostrar)
     {
         dialUI.gameObject.SetActive(mostrar);
-        if (!mostrar) dialUI.localIn = 0;
+        if (!mostrar) 
+        { 
+            dialUI.localIn = 0;
+            player.GetComponent<PlayerController>().onDialog = false; //TESTEAR Y DESCOMENTAR LÍNEA
+        }
     }
 
     public void SetConversacion(Conversacion conv, DialogSpeaker speaker)
@@ -63,10 +67,12 @@ public class DialogManager : MonoBehaviour
             dialUI.conversacion = conv;
             dialUI.localIn = conv.dialogos.Length;
             dialUI.ActualizarTextos(1);
+            
         }
         else
         {
             dialUI.conversacion = conv;
+            //dialUI.localIn = 0;
             dialUI.localIn = speakerActual.dialLocalIn;
             dialUI.ActualizarTextos(0);
         }
