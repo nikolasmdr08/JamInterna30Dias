@@ -26,12 +26,12 @@ MonoBehaviour:
     dialogo: realizo una investigacion super secreta
     sonido: {fileID: 0}
   - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
-    dialogo: "ma\xF1ana me graduo de la escuala de detectives"
+    dialogo: "ma\xF1ana me graduo de la escuela de detectives"
     sonido: {fileID: 0}
   - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
     dialogo: "ser\xEDa una lastima cruzarme con alg\xFAn asesino, verdad?"
     sonido: {fileID: 0}
   - personaje: {fileID: 11400000, guid: 93bf0ddbd08d2b34dbf4d4951f30d297, type: 2}
-    dialogo: "no tengo mas tiempo,wd adi\xF3s!!"
+    dialogo: no tengo mas tiempo, ADIOS AMIGO!!
     sonido: {fileID: 0}
   pregunta: {fileID: 0}
