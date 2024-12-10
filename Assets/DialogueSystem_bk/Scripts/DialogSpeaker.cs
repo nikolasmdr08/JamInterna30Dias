@@ -28,7 +28,7 @@ public class DialogSpeaker : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider collision)
+   /* private void OnTriggerStay(Collider collision)
     {
         Debug.Log("colicion: " + collision);
         if (collision.CompareTag("Player")){
@@ -52,7 +52,7 @@ public class DialogSpeaker : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     public void Conversar()
     {
