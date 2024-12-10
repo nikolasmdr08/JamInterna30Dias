@@ -4,13 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< Updated upstream
   - Interactive
-=======
-  - Zones
-  - NPC
-  - MainCharacter
->>>>>>> Stashed changes
+  - npc
+  - police
   layers:
   - Default
   - TransparentFX
@@ -18,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - NPC
-  - Objeto
+  - 
+  - 
   - 
   - 
   - 
