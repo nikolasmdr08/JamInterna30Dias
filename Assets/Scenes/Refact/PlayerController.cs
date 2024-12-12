@@ -164,16 +164,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!callback.performed || !colitionWithInteractiveElement || currentNpc == null) return;
 
-
-        if (boxToOpen != null)
-        {
-            Debug.Log("Obtener items");
-            for (int i = 0; i >= boxToOpen.GetComponent<Box>().itemsDeTipo.Length - 1; i++)
-            {
-                boxToOpen.GetComponent<Box>()._recursos.obtenerRecursos(boxToOpen.GetComponent<Box>().itemsDeTipo[i]);
-            }
-        }
-
         onDialog = true;
         string[] dialog = null;
 

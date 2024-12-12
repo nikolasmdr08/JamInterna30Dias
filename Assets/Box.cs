@@ -11,4 +11,12 @@ public class Box : MonoBehaviour
     {
         _recursos = FindAnyObjectByType<Recursos>();
     }
+
+    public void obtener() 
+    {
+            for (int i = 0; i >= itemsDeTipo.Length - 1; i++)
+            {
+                _recursos.obtenerRecursos(itemsDeTipo[i]);
+            }
+    }
 }

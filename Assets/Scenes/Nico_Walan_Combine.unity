@@ -153,10 +153,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6403031171420861528}
-  - {fileID: 1307885528}
   - {fileID: 1963853149}
-  - {fileID: 1707254531}
   - {fileID: 2123787720}
+  - {fileID: 1307885528}
+  - {fileID: 1707254531}
   - {fileID: 955254349}
   - {fileID: 1407739521}
   m_Father: {fileID: 2147472607}
@@ -2311,7 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recursos: {fileID: 0}
-  itemsDeTipo: 00000000
+  itemsDeTipo: 0000000001000000
 --- !u!114 &1307885530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11034,7 +11034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recursos: {fileID: 0}
-  itemsDeTipo: 00000000
+  itemsDeTipo: 0000000001000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
