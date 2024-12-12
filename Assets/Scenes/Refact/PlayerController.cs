@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
     private int currentDialogIndex;
     public bool onDialog;
 
+    [SerializeField] private GameObject boxToOpen;
+    public GameObject boxInstrution;
+    public TextMeshProUGUI BoxInstrutionText;
+
     public GameObject dialog;
     public TextMeshProUGUI dialogText;
 
@@ -104,6 +108,16 @@ public class PlayerController : MonoBehaviour
             colitionWithInteractiveElement = true;
             currentNpc = collision.gameObject;
             currentDialogIndex = 0; // Resetear índice de diálogo
+
+        }
+
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            //Debug.Log("Debe mostrar Abrir");
+            instrution.SetActive(true);
+            instrutionText.text = "Abrir";
+            colitionWithInteractiveElement = true;
+            boxToOpen = collision.gameObject;
         }
     }
 
@@ -111,7 +125,7 @@ public class PlayerController : MonoBehaviour
     {
         if ((other.gameObject.CompareTag("npc") || other.gameObject.CompareTag("police")) && onDialog)
         {
-            instrution.SetActive(false);
+           instrution.SetActive(false);
         }
     }
 
@@ -124,6 +138,7 @@ public class PlayerController : MonoBehaviour
             instrutionText.text = "";
             colitionWithInteractiveElement = false;
             currentNpc = null;
+            
         }
         if (collision.gameObject.CompareTag("police"))
         {
@@ -134,11 +149,30 @@ public class PlayerController : MonoBehaviour
             currentNpc.GetComponent<PoliceController>().endDialog = false;
             currentNpc = null;
         }
+
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            //Debug.Log("Debe cerrar la opcion Abrir");
+            instrution.SetActive(false);
+            instrutionText.text = "";
+            colitionWithInteractiveElement = false;
+            boxToOpen = null;
+        }
     }
 
     public void InteractWithElements(InputAction.CallbackContext callback)
     {
         if (!callback.performed || !colitionWithInteractiveElement || currentNpc == null) return;
+
+
+        if (boxToOpen != null)
+        {
+            Debug.Log("Obtener items");
+            for (int i = 0; i >= boxToOpen.GetComponent<Box>().itemsDeTipo.Length - 1; i++)
+            {
+                boxToOpen.GetComponent<Box>()._recursos.obtenerRecursos(boxToOpen.GetComponent<Box>().itemsDeTipo[i]);
+            }
+        }
 
         onDialog = true;
         string[] dialog = null;
@@ -185,6 +219,8 @@ public class PlayerController : MonoBehaviour
 
             onDialog = false;
         }
+
+        
     }
 
 }

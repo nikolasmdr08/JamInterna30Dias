@@ -6,12 +6,13 @@ public class DialogSpeaker : MonoBehaviour
     /*[ReorderableList]*/[SerializeField] public List<Conversacion> conversacionesDisponibles = new List<Conversacion>();
     [SerializeField] private int indexConversaciones = 0;
     public int dialLocalIn = 0;
-    bool enConversacion = false;
+    private bool enConversacion = false;
 
     void Start()
     {
         indexConversaciones = 0;
         dialLocalIn = 0;
+
 
         /* solo testing no en codigo final */
         foreach(var conv in conversacionesDisponibles)

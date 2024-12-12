@@ -8,13 +8,15 @@ public class Assasin_IA : MonoBehaviour
     public Transform target; // El destino hacia donde moverse.
     private NavMeshAgent agent;
     public int Behavior_Decition;
+    public int Option;
     public float Cooldown_Decition;
     public float GameTime;
     public float Agrofeeling;
-    public int Option;
+    public bool visible;
+    public bool huntingMode;
 
 
-    
+
     public GameObject[] ObjetiveZones;
     public GameObject CurrentPoint;
     int Index;
@@ -30,6 +32,8 @@ public class Assasin_IA : MonoBehaviour
         Agrofeeling = 0;
         ObjetiveZones = GameObject.FindGameObjectsWithTag("Zones");
         Prota = GameObject.FindGameObjectWithTag("MainCharacter");
+        visible = true;
+        huntingMode = false;
 
     }
 
@@ -37,14 +41,89 @@ public class Assasin_IA : MonoBehaviour
     void Update()
     {
 
-        if (Behavior_Decition == 0)
+        IaSystem();
+
+        if (huntingMode)
+        {
+            HuntingBeavior();
+        }
+
+    }
+
+    void HuntingBeavior()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    void repositionTarget ()
+    {       
+        Index = Random.Range(0, ObjetiveZones.Length);
+        CurrentPoint = ObjetiveZones[Index];
+        var randomPos = new Vector3( Random.Range(CurrentPoint.GetComponent<BoxCollider>().bounds.min.x, CurrentPoint.GetComponent<BoxCollider>().bounds.max.x), 0f, Random.Range(CurrentPoint.GetComponent<BoxCollider>().bounds.min.z, CurrentPoint.GetComponent<BoxCollider>().bounds.max.z));
+        target.position = randomPos;
+    }
+
+    void Behavior_Action( int BA_Number)
+    {
+        Cooldown_Decition = Random.Range(10f, 18f);
+
+        //chill posibilities -*-
+        if (BA_Number == 1)
+        {
+            repositionTarget();
+            while(CurrentPoint.GetComponent<Area_Script>().Location_Id == Prota.GetComponent<Location>().Location_Id)
+            {
+                repositionTarget();
+            }
+
+        }
+        if (BA_Number == 2)
+        {
+            repositionTarget();
+            while (CurrentPoint.GetComponent<Area_Script>().Location_Id == Prota.GetComponent<Location>().Location_Id)
+            {
+                repositionTarget();
+            }
+            this.transform.position = target.position;
+            print("quiero tepearme");
+            //target.position = Vector3.zero;
+            visible = false;
+        }
+        if (BA_Number == 3)
+        {
+            repositionTarget();
+            while (CurrentPoint.GetComponent<Area_Script>().Location_Id == Prota.GetComponent<Location>().Location_Id)
+            {
+                repositionTarget();
+            }
+            huntingMode = true;
+
+        }
+        if (BA_Number == 4)
+        {
+            repositionTarget();
+        }
+        //Soft posibilities -**-
+        if (BA_Number == 5)
+        {
+            repositionTarget();
+        }
+        //Medium posibilities -***-
+        //Hard posibilities -****-
+        //Very Hard posibilities -*****-
+        //Time to die -X-
+    }
+
+    void IaSystem()
+    {
+        if (Behavior_Decition == 0 && Cooldown_Decition == 0)
         {
             //Killer Thinking: I want to play with him.... let's have some fun..
             //Acumulative posibilities
 
             if (GameTime < 60f) // I will start easy 
             {
-                Agrofeeling = Agrofeeling + Random.Range(1f,5f) ;
+                Agrofeeling = Agrofeeling + Random.Range(1f, 5f);
             }
             if (GameTime >= 60f && GameTime < 300f) // lets start to move a little more 
             {
@@ -68,7 +147,7 @@ public class Assasin_IA : MonoBehaviour
             {
                 //chill posibilities -*-
 
-                Option = Random.Range(1, 5); //cant opciones
+                Option = Random.Range(1, 3); //cant opciones
 
                 // 1)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
@@ -81,33 +160,18 @@ public class Assasin_IA : MonoBehaviour
                 // if Prota esta en un sector , me ire al mas alejado
                 if (Option == 2)
                 {
-                    Behavior_Decition = 1;
+                    Behavior_Decition = 2;
                 }
-
-                // 3)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-                if (Option == 3)
-                {
-                    Behavior_Decition = 1;
-                }
-
-                // 4)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-                if (Option == 4)
-                {
-                    Behavior_Decition = 1;
-                }
-
-
 
 
             }
-            if (Agrofeeling >= 15f && Agrofeeling < 30f )
+            if (Agrofeeling >= 15f && Agrofeeling < 30f)
             {
                 //Soft posibilities -**-
 
                 // 1)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
+                Behavior_Decition = 3;
 
                 // 2)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
@@ -118,7 +182,7 @@ public class Assasin_IA : MonoBehaviour
                 // 4)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
 
-                Behavior_Decition = 2;
+
             }
             if (Agrofeeling >= 30f && Agrofeeling < 50f)
             {
@@ -136,7 +200,7 @@ public class Assasin_IA : MonoBehaviour
                 // 4)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
 
-                Behavior_Decition = 3;
+                Behavior_Decition = 5;
             }
             if (Agrofeeling >= 50f && Agrofeeling < 70f)
             {
@@ -154,7 +218,7 @@ public class Assasin_IA : MonoBehaviour
                 // 4)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
 
-                Behavior_Decition = 4;
+                Behavior_Decition = 5;
             }
             if (Agrofeeling >= 70f && Agrofeeling < 85f)
             {
@@ -179,8 +243,8 @@ public class Assasin_IA : MonoBehaviour
             //    //Bloodlust Mode
             //}
 
-            Behavior_Action();
-            Cooldown_Decition = Random.Range(15f, 40f);
+            Behavior_Action(Behavior_Decition);
+
         }
 
         else
@@ -193,50 +257,24 @@ public class Assasin_IA : MonoBehaviour
             {
                 Behavior_Decition = 0;
                 Cooldown_Decition = 0;
+                if (visible == false)
+                {
+                    visible = true;
+                    agent.isStopped = false;
+                }
+
             }
         }
-        GameTime = GameTime + Time.deltaTime;
 
-        if (target != null)
+        if (target.position != Vector3.zero)
         {
             agent.SetDestination(target.position);
         }
+        if (!visible)
+        {
+            agent.isStopped = true;
+        }
 
-    }
-    void repositionTarget ()
-    {       
-        Index = Random.Range(0, ObjetiveZones.Length);
-        CurrentPoint = ObjetiveZones[Index];
-        var randomPos = new Vector3( Random.Range(CurrentPoint.GetComponent<BoxCollider>().bounds.min.x, CurrentPoint.GetComponent<BoxCollider>().bounds.max.x), 0f, Random.Range(CurrentPoint.GetComponent<BoxCollider>().bounds.min.z, CurrentPoint.GetComponent<BoxCollider>().bounds.max.z));
-        target.position = randomPos;
-    }
-
-    void Behavior_Action()
-    {
-        if (Behavior_Decition == 1)
-        {
-            repositionTarget();
-            while(CurrentPoint.GetComponent<Area_Script>().Location_Id == Prota.GetComponent<Location>().Location_Id)
-            {
-                repositionTarget();
-            }
-
-        }
-        if (Behavior_Decition == 2)
-        {
-            repositionTarget();
-        }
-        if (Behavior_Decition == 3)
-        {
-            repositionTarget();
-        }
-        if (Behavior_Decition == 4)
-        {
-            repositionTarget();
-        }
-        if (Behavior_Decition == 5)
-        {
-            repositionTarget();
-        }
+        GameTime = GameTime + Time.deltaTime;
     }
 }

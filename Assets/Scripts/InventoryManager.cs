@@ -19,6 +19,7 @@ public class InventoryManager : MonoBehaviour
     public void FabricarItem(string nombreTool)
     {
 
+
         GameObject toolUI = Instantiate(toolSlotPrefab, playerTools.InventoryUIPanel.transform);
         toolUI.GetComponent<ToolSlot>().toolName = nombreTool;
         //toolUI.GetComponent<ToolSlot>().toolImage.color = Color.red;
