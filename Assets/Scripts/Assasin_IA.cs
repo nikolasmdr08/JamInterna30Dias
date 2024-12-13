@@ -71,7 +71,7 @@ public class Assasin_IA : MonoBehaviour
                 }
                 else
                 {
-                    SpeedMultiplier = 8f;
+                    SpeedMultiplier = 12f;
                     agent.speed = SpeedMultiplier;
                 }
             }
