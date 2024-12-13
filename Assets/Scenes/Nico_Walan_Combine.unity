@@ -3401,7 +3401,7 @@ GameObject:
   - component: {fileID: 1174132365}
   - component: {fileID: 1174132364}
   - component: {fileID: 1174132363}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (13)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -4647,7 +4647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0022a26b86e04424e8b06a960f737e77, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5796,6 +5796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 517530021}
+  agent: {fileID: 0}
   Behavior_Decition: 0
   Option: 0
   Cooldown_Decition: 0
@@ -5803,6 +5804,8 @@ MonoBehaviour:
   Agrofeeling: 0
   visible: 0
   huntingMode: 0
+  Victim: {fileID: 0}
+  VictimTarged: 0
   ObjetiveZones: []
   CurrentPoint: {fileID: 0}
   Prota: {fileID: 0}
@@ -5822,10 +5825,11 @@ MonoBehaviour:
   viewAngles: 64
   TargetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 64
+  Assasin_code: {fileID: 0}
   visibleTargets: []
 --- !u!108 &1518427597
 Light:
@@ -9104,7 +9108,7 @@ GameObject:
   - component: {fileID: 6714599999496918265}
   - component: {fileID: 4590773335525551084}
   - component: {fileID: 7610999510569921153}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (2)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -9705,7 +9709,7 @@ GameObject:
   - component: {fileID: 7458720564163300056}
   - component: {fileID: 6915613420251886391}
   - component: {fileID: 5496459792481645432}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (1)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -10245,7 +10249,7 @@ GameObject:
   - component: {fileID: 6082353133305141412}
   - component: {fileID: 3071349291269576211}
   - component: {fileID: 1569602826601148540}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (8)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -10362,7 +10366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 198.5, y: -31.204987}
+  m_AnchoredPosition: {x: 198.5, y: -31.204956}
   m_SizeDelta: {x: 329.2, y: 60.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1762303745637053068
@@ -11016,7 +11020,7 @@ GameObject:
   - component: {fileID: 3612861921184976988}
   - component: {fileID: 85669327662852610}
   - component: {fileID: 4821551847070501895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (4)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -11035,7 +11039,7 @@ GameObject:
   - component: {fileID: 4926567210876644965}
   - component: {fileID: 5608896878926602822}
   - component: {fileID: 7712128965027840704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (11)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -11666,7 +11670,7 @@ GameObject:
   - component: {fileID: 1082139141661393254}
   - component: {fileID: 1165609844965302276}
   - component: {fileID: 27913983759446760}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (5)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -11846,7 +11850,7 @@ GameObject:
   - component: {fileID: 3571168950419768757}
   - component: {fileID: 5703093664175016721}
   - component: {fileID: 3907908522398937386}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (3)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -12740,7 +12744,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!135 &4368585661219898928
 SphereCollider:
@@ -13226,7 +13230,7 @@ GameObject:
   - component: {fileID: 2728127052380416000}
   - component: {fileID: 2500741128136246699}
   - component: {fileID: 7421632250330835567}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (7)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -13684,7 +13688,7 @@ GameObject:
   - component: {fileID: 6730922929567539623}
   - component: {fileID: 1763676318041232920}
   - component: {fileID: 2169857718269589449}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (10)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -13755,7 +13759,7 @@ GameObject:
   - component: {fileID: 8243182995335773303}
   - component: {fileID: 4368585661219898928}
   - component: {fileID: 6640823199631769496}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -14404,7 +14408,7 @@ GameObject:
   - component: {fileID: 3959994076799311124}
   - component: {fileID: 2240701544922257724}
   - component: {fileID: 4269684036082587374}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (9)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -14848,7 +14852,7 @@ GameObject:
   - component: {fileID: 7446062642469548304}
   - component: {fileID: 1167763827960652364}
   - component: {fileID: 2397849084147884973}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hexagon Pointed-Top (6)
   m_TagString: npc
   m_Icon: {fileID: 0}
@@ -15019,7 +15023,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 156.89996, y: -31.204987}
+  m_AnchoredPosition: {x: 156.8999, y: -31.204956}
   m_SizeDelta: {x: 313.8, y: 60.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8152599078323687700
@@ -15485,6 +15489,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1040327759}
   - {fileID: 1532570480}
+  - {fileID: 1120862924}
   - {fileID: 699080018}
   - {fileID: 2147472607}
   - {fileID: 2026414179}
@@ -15493,6 +15498,5 @@ SceneRoots:
   - {fileID: 5805821739169836563}
   - {fileID: 3705983205256252012}
   - {fileID: 3621286631773586845}
-  - {fileID: 1120862924}
   - {fileID: 1351995307}
   - {fileID: 950949036}

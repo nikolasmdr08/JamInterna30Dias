@@ -26,6 +26,7 @@ public class Recursos : MonoBehaviour
         Debug.Log("Se han obtenido " + i + " unidades de tipo" + tipo.ToString());
         recursos[tipo] = recursos[tipo] + i;
         recursosUI[tipo].GetComponent<TextMeshProUGUI>().text = recursos[tipo].ToString();
+        ActualizarRecursosEnUI();
     }
 
     public void ActualizarRecursosEnUI() 
