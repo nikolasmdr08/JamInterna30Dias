@@ -9,13 +9,17 @@ public class Assasin_IA : MonoBehaviour
     public NavMeshAgent agent;
     public int Behavior_Decition;
     public int Option;
+    public int Damage;
     public float Cooldown_Decition;
     public float GameTime;
     public float Agrofeeling;
+    public float Multiplier;
+    public float SpeedMultiplier;
     public bool visible;
     public bool huntingMode;
 
     public Transform Victim;
+    public GameObject VictimGameObject;
     public bool VictimTarged;
 
 
@@ -38,6 +42,9 @@ public class Assasin_IA : MonoBehaviour
         visible = true;
         huntingMode = false;
         VictimTarged = false;
+        Multiplier = 1f;
+        SpeedMultiplier = 1f;
+        Damage = 10;
 
     }
 
@@ -46,11 +53,6 @@ public class Assasin_IA : MonoBehaviour
     {
 
         IaSystem();
-
-        if (huntingMode)
-        {
-            HuntingBeavior();
-        }
 
     }
 
@@ -61,10 +63,55 @@ public class Assasin_IA : MonoBehaviour
             if (agent.isStopped)
             {
                 agent.isStopped = false;
+                
+                if (Behavior_Decition != 99)
+                {
+                    SpeedMultiplier = 5.5f;
+                    agent.speed = SpeedMultiplier;
+                }
+                else
+                {
+                    SpeedMultiplier = 8f;
+                    agent.speed = SpeedMultiplier;
+                }
             }
-            agent.destination = Victim.position;
+            if (Behavior_Decition != 99)
+            {
+                agent.destination = Victim.position;
+
+                if (agent.remainingDistance <= 0)
+                {
+                    if (VictimGameObject.GetComponent<Npcs_IA>().Health - Damage > 0)
+                    {
+                        VictimGameObject.GetComponent<Npcs_IA>().Health -= Damage * Time.deltaTime;
+                    }
+                    else
+                    {
+                        CleanActions();
+                        VictimGameObject.GetComponent<Npcs_IA>().Health = 0;
+                        VictimGameObject = null;
+                        Victim = null;
+                    }
+
+                }
+            }
+            else
+            {
+                agent.destination = Prota.transform.position;
+            }
+            
+
+            //Validador de llegada a objetivo
+
+            
+
         }
-        //throw new System.NotImplementedException();
+        else
+        {
+            SpeedMultiplier = 4f;
+            agent.speed = SpeedMultiplier; 
+        }
+        
     }
 
     void CleanActions()
@@ -77,6 +124,7 @@ public class Assasin_IA : MonoBehaviour
         {
             huntingMode = false;
         }
+        Cooldown_Decition = 0;
     }
     void repositionTarget ()
     {       
@@ -133,11 +181,15 @@ public class Assasin_IA : MonoBehaviour
         if (BA_Number == 4)
         {
             repositionTarget();
+            huntingMode = true;
         }
         //Soft posibilities -**-
-        if (BA_Number == 5)
+        if (BA_Number == 99)
         {
-            repositionTarget();
+            huntingMode = true;
+            VictimTarged = true;
+            agent.isStopped = true;
+
         }
         //Medium posibilities -***-
         //Hard posibilities -****-
@@ -154,15 +206,15 @@ public class Assasin_IA : MonoBehaviour
 
             if (GameTime < 60f) // I will start easy 
             {
-                Agrofeeling = Agrofeeling + Random.Range(1f, 5f);
+                Agrofeeling = Agrofeeling + (Random.Range(1f, 5f) * Multiplier) ;
             }
             if (GameTime >= 60f && GameTime < 300f) // lets start to move a little more 
             {
-                Agrofeeling = Agrofeeling + Random.Range(5f, 15f);
+                Agrofeeling = Agrofeeling + (Random.Range(5f, 15f) * Multiplier);
             }
             if (GameTime >= 300f && GameTime < 450f) // ......
             {
-                Agrofeeling = Agrofeeling + Random.Range(15f, 30f);
+                Agrofeeling = Agrofeeling + (Random.Range(15f, 30f) * Multiplier);
             }
             //else // Enough of you....
             //{
@@ -234,9 +286,9 @@ public class Assasin_IA : MonoBehaviour
                 // 4)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
 
-                Behavior_Decition = 5;
+                Behavior_Decition = 4;
             }
-            if (Agrofeeling >= 50f && Agrofeeling < 70f)
+            if (Agrofeeling >= 50f && Agrofeeling < 100f)
             {
                 //Hard posibilities -****-
 
@@ -252,9 +304,9 @@ public class Assasin_IA : MonoBehaviour
                 // 4)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
 
-                Behavior_Decition = 5;
+                Behavior_Decition = 4;
             }
-            if (Agrofeeling >= 70f && Agrofeeling < 85f)
+            if (Agrofeeling >= 100f)
             {
                 //Very Hard posibilities -*****-
 
@@ -270,7 +322,7 @@ public class Assasin_IA : MonoBehaviour
                 // 4)I will give him space
                 // if Prota esta en un sector , me ire al mas alejado
 
-                Behavior_Decition = 5;
+                Behavior_Decition = 99;
             }
             //else //Time to die -X-
             //{
@@ -283,21 +335,25 @@ public class Assasin_IA : MonoBehaviour
 
         else
         {
-            if (Cooldown_Decition >= 0)
+            if (Behavior_Decition != 99)
             {
-                Cooldown_Decition = Cooldown_Decition - Time.deltaTime;
-            }
-            else
-            {
-                Behavior_Decition = 0;
-                Cooldown_Decition = 0;
-                if (visible == false)
+                if (Cooldown_Decition >= 0)
                 {
-                    visible = true;
-                    agent.isStopped = false;
+                    Cooldown_Decition = Cooldown_Decition - Time.deltaTime;
                 }
+                else
+                {
+                    Behavior_Decition = 0;
+                    Cooldown_Decition = 0;
+                    if (visible == false)
+                    {
+                        visible = true;
+                        agent.isStopped = false;
+                    }
 
+                }
             }
+            
         }
 
         if (target.position != Vector3.zero)
@@ -310,5 +366,10 @@ public class Assasin_IA : MonoBehaviour
         }
 
         GameTime = GameTime + Time.deltaTime;
+
+        if (huntingMode)
+        {
+            HuntingBeavior();
+        }
     }
 }

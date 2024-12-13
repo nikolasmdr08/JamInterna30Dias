@@ -15,6 +15,7 @@ public class FieldOfView : MonoBehaviour
 
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
+    public List<GameObject> visibleTargetsGameObjects = new List<GameObject>();
 
     void Start()
     {
@@ -38,6 +39,7 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
+            GameObject targetVictimGameObject = targetsInViewRadius[i].gameObject;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle (transform.forward,dirToTarget) < viewAngles / 2)
             {
@@ -46,12 +48,12 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position,dirToTarget,distanceToTarget,ObstacleMask))
                 {
                     visibleTargets.Add(target);
+                    visibleTargetsGameObjects.Add(targetVictimGameObject);
 
-                    print("TE VEO");
-
-                    if (Assasin_code.huntingMode && !Assasin_code.VictimTarged )
+                    if (Assasin_code.huntingMode && !Assasin_code.VictimTarged && Assasin_code.Behavior_Decition != 99)
                     {
-                        Assasin_code.Victim = targetsInViewRadius[i].transform;
+                        Assasin_code.Victim = target;
+                        Assasin_code.VictimGameObject = targetVictimGameObject;
                         Assasin_code.VictimTarged = true;
                         Assasin_code.agent.isStopped = true;
                     }
