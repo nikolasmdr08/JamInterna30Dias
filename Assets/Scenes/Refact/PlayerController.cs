@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject dialog;
     public TextMeshProUGUI dialogText;
+    private bool obtenerResurso = false;
+    public bool menuAbierto = false;
+    public GameObject inventario;
 
     void Start()
     {
@@ -127,6 +130,12 @@ public class PlayerController : MonoBehaviour
         {
            instrution.SetActive(false);
         }
+
+        if(obtenerResurso && other.gameObject.CompareTag("Box"))
+        {
+            other.gameObject.GetComponent<Box>().obtener();
+            obtenerResurso = false;
+        }
     }
 
     private void OnTriggerExit(Collider collision)
@@ -162,55 +171,77 @@ public class PlayerController : MonoBehaviour
 
     public void InteractWithElements(InputAction.CallbackContext callback)
     {
-        if (!callback.performed || !colitionWithInteractiveElement || currentNpc == null) return;
+        if (!callback.performed || !colitionWithInteractiveElement) return;
 
-        onDialog = true;
-        string[] dialog = null;
-
-        // Detectar el tipo de controlador y obtener el diálogo correspondiente
-        var npcController = currentNpc.GetComponent<NpcController>();
-        if (npcController != null)
+        if(currentNpc != null)
         {
-            dialog = GameManager.instance.poseeNota.Contains(currentNpc)
-                ? npcController.dialogWithNote
-                : npcController.dialogOutNote;
+            onDialog = true;
+            string[] dialog = null;
+
+            // Detectar el tipo de controlador y obtener el diálogo correspondiente
+            var npcController = currentNpc.GetComponent<NpcController>();
+            if (npcController != null)
+            {
+                dialog = GameManager.instance.poseeNota.Contains(currentNpc)
+                    ? npcController.dialogWithNote
+                    : npcController.dialogOutNote;
+            }
+            else
+            {
+                var policeController = currentNpc.GetComponent<PoliceController>();
+                if (policeController != null)
+                {
+                    dialog = policeController.dialogue;
+                }
+            }
+
+            // Si no se encontró diálogo, finalizar la interacción
+            if (dialog == null) return;
+
+            // Mostrar el diálogo actual
+            if (currentDialogIndex < dialog.Length)
+            {
+                dialogText.text = dialog[currentDialogIndex];
+                currentDialogIndex++;
+            }
+
+            // Finalizar el diálogo si se alcanza el final
+            if (currentDialogIndex >= dialog.Length)
+            {
+                if (npcController != null)
+                {
+                    npcController.endDialog = true;
+                    currentDialogIndex = npcController.repeat ? 0 : dialog.Length - 1;
+                }
+                else if (currentNpc.GetComponent<PoliceController>() != null)
+                {
+                    currentNpc.GetComponent<PoliceController>().endDialog = true;
+                }
+
+                onDialog = false;
+            }
         }
         else
         {
-            var policeController = currentNpc.GetComponent<PoliceController>();
-            if (policeController != null)
-            {
-                dialog = policeController.dialogue;
-            }
+            obtenerResurso = true;
         }
+    }
 
-        // Si no se encontró diálogo, finalizar la interacción
-        if (dialog == null) return;
-
-        // Mostrar el diálogo actual
-        if (currentDialogIndex < dialog.Length)
+    public void OpenCloseMenu(InputAction.CallbackContext callback)
+    {
+        if (callback.performed)
         {
-            dialogText.text = dialog[currentDialogIndex];
-            currentDialogIndex++;
-        }
-
-        // Finalizar el diálogo si se alcanza el final
-        if (currentDialogIndex >= dialog.Length)
-        {
-            if (npcController != null)
+            if (!menuAbierto)
             {
-                npcController.endDialog = true;
-                currentDialogIndex = npcController.repeat ? 0 : dialog.Length - 1;
+                menuAbierto = true;
+                inventario.SetActive(menuAbierto);
             }
-            else if (currentNpc.GetComponent<PoliceController>() != null)
+            else
             {
-                currentNpc.GetComponent<PoliceController>().endDialog = true;
+                menuAbierto = false;
+                inventario.SetActive(menuAbierto);
             }
-
-            onDialog = false;
         }
-
-        
     }
 
 }

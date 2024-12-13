@@ -14,9 +14,10 @@ public class Box : MonoBehaviour
 
     public void obtener() 
     {
-            for (int i = 0; i >= itemsDeTipo.Length - 1; i++)
-            {
-                _recursos.obtenerRecursos(itemsDeTipo[i]);
-            }
+        Debug.Log("loot");
+        for (int i = 0; i >= itemsDeTipo.Length - 1; i++)
+        {
+            _recursos.obtenerRecursos(itemsDeTipo[i]);
+        }
     }
 }

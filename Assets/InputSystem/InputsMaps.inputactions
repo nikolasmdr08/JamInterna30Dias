@@ -15,6 +15,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "9234ac18-e6ec-452f-a69e-e9d50edd2b04",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Move",
                     "type": "PassThrough",
                     "id": "1ba65a9d-fb9d-4461-a63e-043f249bedbb",
@@ -53,6 +62,17 @@
                     "processors": "",
                     "groups": ";mouse",
                     "action": "InteractWithElement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d87d67e9-fd00-4a6c-930b-1b428d0cc968",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";GamePad;Gamepad",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
