@@ -11,12 +11,15 @@ public class FieldOfView : MonoBehaviour
     public LayerMask TargetMask;
     public LayerMask ObstacleMask;
 
+    public Assasin_IA Assasin_code;
+
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
     void Start()
     {
         StartCoroutine("FindTargetswithDelay",0f);
+        Assasin_code = this.GetComponent<Assasin_IA>();
     }
 
     IEnumerator FindTargetswithDelay(float delay)
@@ -45,6 +48,14 @@ public class FieldOfView : MonoBehaviour
                     visibleTargets.Add(target);
 
                     print("TE VEO");
+
+                    if (Assasin_code.huntingMode && !Assasin_code.VictimTarged )
+                    {
+                        Assasin_code.Victim = targetsInViewRadius[i].transform;
+                        Assasin_code.VictimTarged = true;
+                        Assasin_code.agent.isStopped = true;
+                    }
+                    
                 }
             }
         }

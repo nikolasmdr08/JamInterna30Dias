@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Assasin_IA : MonoBehaviour
 {
     public Transform target; // El destino hacia donde moverse.
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     public int Behavior_Decition;
     public int Option;
     public float Cooldown_Decition;
@@ -14,6 +14,9 @@ public class Assasin_IA : MonoBehaviour
     public float Agrofeeling;
     public bool visible;
     public bool huntingMode;
+
+    public Transform Victim;
+    public bool VictimTarged;
 
 
 
@@ -34,6 +37,7 @@ public class Assasin_IA : MonoBehaviour
         Prota = GameObject.FindGameObjectWithTag("MainCharacter");
         visible = true;
         huntingMode = false;
+        VictimTarged = false;
 
     }
 
@@ -52,9 +56,28 @@ public class Assasin_IA : MonoBehaviour
 
     void HuntingBeavior()
     {
+        if (VictimTarged)
+        {
+            if (agent.isStopped)
+            {
+                agent.isStopped = false;
+            }
+            agent.destination = Victim.position;
+        }
         //throw new System.NotImplementedException();
     }
 
+    void CleanActions()
+    {
+        if (VictimTarged)
+        {
+            VictimTarged = false;
+        }
+        if (huntingMode)
+        {
+            huntingMode = false;
+        }
+    }
     void repositionTarget ()
     {       
         Index = Random.Range(0, ObjetiveZones.Length);
@@ -70,6 +93,10 @@ public class Assasin_IA : MonoBehaviour
         //chill posibilities -*-
         if (BA_Number == 1)
         {
+            if (huntingMode)
+            {
+                huntingMode = false;
+            }
             repositionTarget();
             while(CurrentPoint.GetComponent<Area_Script>().Location_Id == Prota.GetComponent<Location>().Location_Id)
             {
@@ -79,6 +106,10 @@ public class Assasin_IA : MonoBehaviour
         }
         if (BA_Number == 2)
         {
+            if (huntingMode)
+            {
+                huntingMode = false;
+            }
             repositionTarget();
             while (CurrentPoint.GetComponent<Area_Script>().Location_Id == Prota.GetComponent<Location>().Location_Id)
             {
@@ -139,7 +170,10 @@ public class Assasin_IA : MonoBehaviour
             //}
 
 
+            //Limpieza de booleanos de accion
 
+            // ==>>>>>>>>>>>> CleanActions();
+            
 
             //My next move will be...
 
