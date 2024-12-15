@@ -901,7 +901,8 @@ GameObject:
   - component: {fileID: 249880683}
   - component: {fileID: 249880687}
   - component: {fileID: 249880688}
-  m_Layer: 6
+  - component: {fileID: 249880689}
+  m_Layer: 8
   m_Name: Npc1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1055,6 +1056,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &249880689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249880681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &301644961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,6 +2143,87 @@ Transform:
   - {fileID: 845434528}
   m_Father: {fileID: 1517745399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &722551086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722551088}
+  - component: {fileID: 722551087}
+  - component: {fileID: 722551089}
+  m_Layer: 0
+  m_Name: StunGrenade
+  m_TagString: Stun
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!135 &722551087
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722551086}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 11.78
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &722551088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722551086}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &722551089
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722551086}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &839128598
 GameObject:
   m_ObjectHideFlags: 0
@@ -3401,6 +3496,7 @@ GameObject:
   - component: {fileID: 1174132365}
   - component: {fileID: 1174132364}
   - component: {fileID: 1174132363}
+  - component: {fileID: 1174132366}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (13)
   m_TagString: npc
@@ -3520,6 +3616,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1174132366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174132361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &1175402535
 GameObject:
   m_ObjectHideFlags: 0
@@ -5705,9 +5814,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5799,13 +5908,19 @@ MonoBehaviour:
   agent: {fileID: 0}
   Behavior_Decition: 0
   Option: 0
+  Damage: 0
   Cooldown_Decition: 0
   GameTime: 0
   Agrofeeling: 0
+  Multiplier: 0
+  SpeedMultiplier: 0
+  StunTime: 0
   visible: 0
   huntingMode: 0
   Victim: {fileID: 0}
+  VictimGameObject: {fileID: 0}
   VictimTarged: 0
+  Stunned: 0
   ObjetiveZones: []
   CurrentPoint: {fileID: 0}
   Prota: {fileID: 0}
@@ -5831,6 +5946,7 @@ MonoBehaviour:
     m_Bits: 64
   Assasin_code: {fileID: 0}
   visibleTargets: []
+  visibleTargetsGameObjects: []
 --- !u!108 &1518427597
 Light:
   m_ObjectHideFlags: 0
@@ -9108,6 +9224,7 @@ GameObject:
   - component: {fileID: 6714599999496918265}
   - component: {fileID: 4590773335525551084}
   - component: {fileID: 7610999510569921153}
+  - component: {fileID: 7610999510569921154}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (2)
   m_TagString: npc
@@ -9310,6 +9427,7 @@ GameObject:
   - component: {fileID: 961998320514863569}
   - component: {fileID: 2082172230460069548}
   - component: {fileID: 6196678130678279627}
+  - component: {fileID: 6196678130678279628}
   m_Layer: 7
   m_Name: Player
   m_TagString: MainCharacter
@@ -9709,6 +9827,7 @@ GameObject:
   - component: {fileID: 7458720564163300056}
   - component: {fileID: 6915613420251886391}
   - component: {fileID: 5496459792481645432}
+  - component: {fileID: 7458720564163300057}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (1)
   m_TagString: npc
@@ -10249,6 +10368,7 @@ GameObject:
   - component: {fileID: 6082353133305141412}
   - component: {fileID: 3071349291269576211}
   - component: {fileID: 1569602826601148540}
+  - component: {fileID: 6082353133305141413}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (8)
   m_TagString: npc
@@ -11020,6 +11140,7 @@ GameObject:
   - component: {fileID: 3612861921184976988}
   - component: {fileID: 85669327662852610}
   - component: {fileID: 4821551847070501895}
+  - component: {fileID: 6782902434453879858}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (4)
   m_TagString: npc
@@ -11039,6 +11160,7 @@ GameObject:
   - component: {fileID: 4926567210876644965}
   - component: {fileID: 5608896878926602822}
   - component: {fileID: 7712128965027840704}
+  - component: {fileID: 7712128965027840705}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (11)
   m_TagString: npc
@@ -11670,6 +11792,7 @@ GameObject:
   - component: {fileID: 1082139141661393254}
   - component: {fileID: 1165609844965302276}
   - component: {fileID: 27913983759446760}
+  - component: {fileID: 4270086722050709322}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (5)
   m_TagString: npc
@@ -11850,6 +11973,7 @@ GameObject:
   - component: {fileID: 3571168950419768757}
   - component: {fileID: 5703093664175016721}
   - component: {fileID: 3907908522398937386}
+  - component: {fileID: 5703093664175016722}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (3)
   m_TagString: npc
@@ -12688,6 +12812,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1998076318846898320}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &4270086722050709322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3278971405763582011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &4279093822909666745
 GameObject:
   m_ObjectHideFlags: 0
@@ -13230,6 +13367,7 @@ GameObject:
   - component: {fileID: 2728127052380416000}
   - component: {fileID: 2500741128136246699}
   - component: {fileID: 7421632250330835567}
+  - component: {fileID: 7421632250330835568}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (7)
   m_TagString: npc
@@ -13548,6 +13686,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5000001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5703093664175016722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431285053390253610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!4 &5711853051123597715
 Transform:
   m_ObjectHideFlags: 0
@@ -13688,6 +13839,7 @@ GameObject:
   - component: {fileID: 6730922929567539623}
   - component: {fileID: 1763676318041232920}
   - component: {fileID: 2169857718269589449}
+  - component: {fileID: 6730922929567539624}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (10)
   m_TagString: npc
@@ -13747,6 +13899,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6082353133305141413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677154751730196783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &6148754733816835320
 GameObject:
   m_ObjectHideFlags: 0
@@ -13759,6 +13924,7 @@ GameObject:
   - component: {fileID: 8243182995335773303}
   - component: {fileID: 4368585661219898928}
   - component: {fileID: 6640823199631769496}
+  - component: {fileID: 8243182995335773304}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top
   m_TagString: npc
@@ -13814,6 +13980,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Location_Id: 0
+--- !u!114 &6196678130678279628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598876554670016107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4d6bd7265a57648af581376678888a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!114 &6265653962944735337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14057,6 +14236,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6730922929567539624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5954127248470512147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!4 &6782902434453879857
 Transform:
   m_ObjectHideFlags: 0
@@ -14072,6 +14264,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1998076318846898320}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &6782902434453879858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345708384238007606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!114 &6802351160645845910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14274,6 +14479,19 @@ MonoBehaviour:
   - Espero que alguien detenga a ese monstruo
   - "\xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am
     \xD1am \xD1am"
+--- !u!114 &7421632250330835568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246905287586908598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!212 &7446062642469548304
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14378,6 +14596,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7458720564163300057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199040141103741096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &7470523419059504781
 GameObject:
   m_ObjectHideFlags: 0
@@ -14408,6 +14639,7 @@ GameObject:
   - component: {fileID: 3959994076799311124}
   - component: {fileID: 2240701544922257724}
   - component: {fileID: 4269684036082587374}
+  - component: {fileID: 7538176665543632991}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (9)
   m_TagString: npc
@@ -14415,6 +14647,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7538176665543632991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538176665543632990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!114 &7610999510569921153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14439,6 +14684,19 @@ MonoBehaviour:
   - Espero que alguien detenga a ese monstruo
   - "\xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am
     \xD1am \xD1am"
+--- !u!114 &7610999510569921154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242169661727634044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!212 &7693488807651598277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14515,6 +14773,19 @@ MonoBehaviour:
   - Espero que alguien detenga a ese monstruo
   - "\xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am \xD1am
     \xD1am \xD1am"
+--- !u!114 &7712128965027840705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354528965399276968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!114 &7714539120132355817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14852,6 +15123,7 @@ GameObject:
   - component: {fileID: 7446062642469548304}
   - component: {fileID: 1167763827960652364}
   - component: {fileID: 2397849084147884973}
+  - component: {fileID: 7988789944655204371}
   m_Layer: 8
   m_Name: Hexagon Pointed-Top (6)
   m_TagString: npc
@@ -14859,6 +15131,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7988789944655204371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7988789944655204370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &7996602625433217901
 GameObject:
   m_ObjectHideFlags: 0
@@ -15151,6 +15436,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8243182995335773304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148754733816835320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ee5d03e73f4ef48b836e2d35ace0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
 --- !u!1 &8305648472210681543
 GameObject:
   m_ObjectHideFlags: 0
@@ -15490,6 +15788,7 @@ SceneRoots:
   - {fileID: 1040327759}
   - {fileID: 1532570480}
   - {fileID: 1120862924}
+  - {fileID: 722551088}
   - {fileID: 699080018}
   - {fileID: 2147472607}
   - {fileID: 2026414179}

@@ -10,6 +10,7 @@ TagManager:
   - Zones
   - MainCharacter
   - Box
+  - Stun
   layers:
   - Default
   - TransparentFX

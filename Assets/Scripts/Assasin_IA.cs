@@ -15,12 +15,14 @@ public class Assasin_IA : MonoBehaviour
     public float Agrofeeling;
     public float Multiplier;
     public float SpeedMultiplier;
+    public float StunTime;
     public bool visible;
     public bool huntingMode;
 
     public Transform Victim;
     public GameObject VictimGameObject;
     public bool VictimTarged;
+    public bool Stunned;
 
 
 
@@ -42,9 +44,14 @@ public class Assasin_IA : MonoBehaviour
         visible = true;
         huntingMode = false;
         VictimTarged = false;
+        Stunned = false;
+        StunTime = 0;
         Multiplier = 1f;
         SpeedMultiplier = 1f;
         Damage = 10;
+        agent.angularSpeed = 360;
+        agent.acceleration = 140;
+        
 
     }
 
@@ -53,6 +60,12 @@ public class Assasin_IA : MonoBehaviour
     {
 
         IaSystem();
+
+
+        //if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
+        //{
+        //    transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
+        //}
 
     }
 
@@ -71,7 +84,7 @@ public class Assasin_IA : MonoBehaviour
                 }
                 else
                 {
-                    SpeedMultiplier = 12f;
+                    SpeedMultiplier = 14f;
                     agent.speed = SpeedMultiplier;
                 }
             }
@@ -97,7 +110,13 @@ public class Assasin_IA : MonoBehaviour
             }
             else
             {
+                agent.SetDestination(Prota.transform.position);
                 agent.destination = Prota.transform.position;
+
+                if (Vector3.Distance(this.transform.position, Prota.transform.position) <= 1f)
+                {
+                    Prota.GetComponent<Player_Health>().Health = 0;
+                }
             }
             
 
@@ -189,6 +208,8 @@ public class Assasin_IA : MonoBehaviour
             huntingMode = true;
             VictimTarged = true;
             agent.isStopped = true;
+            //agent.SetDestination(Prota.transform.position);
+
 
         }
         //Medium posibilities -***-
@@ -199,177 +220,209 @@ public class Assasin_IA : MonoBehaviour
 
     void IaSystem()
     {
-        if (Behavior_Decition == 0 && Cooldown_Decition == 0)
+        if (!Stunned)
         {
-            //Killer Thinking: I want to play with him.... let's have some fun..
-            //Acumulative posibilities
-
-            if (GameTime < 60f) // I will start easy 
+            if (Behavior_Decition == 0 && Cooldown_Decition == 0)
             {
-                Agrofeeling = Agrofeeling + (Random.Range(1f, 5f) * Multiplier) ;
-            }
-            if (GameTime >= 60f && GameTime < 300f) // lets start to move a little more 
-            {
-                Agrofeeling = Agrofeeling + (Random.Range(5f, 15f) * Multiplier);
-            }
-            if (GameTime >= 300f && GameTime < 450f) // ......
-            {
-                Agrofeeling = Agrofeeling + (Random.Range(15f, 30f) * Multiplier);
-            }
-            //else // Enough of you....
-            //{
-            //    Agrofeeling = Agrofeeling + Random.Range(40f, 60f);
-            //}
+                //Killer Thinking: I want to play with him.... let's have some fun..
+                //Acumulative posibilities
 
-
-            //Limpieza de booleanos de accion
-
-            // ==>>>>>>>>>>>> CleanActions();
-            
-
-            //My next move will be...
-
-            if (Agrofeeling < 15f)
-            {
-                //chill posibilities -*-
-
-                Option = Random.Range(1, 3); //cant opciones
-
-                // 1)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-                if (Option == 1)
+                if (GameTime < 60f) // I will start easy 
                 {
-                    Behavior_Decition = 1;
+                    Agrofeeling = Agrofeeling + (Random.Range(1f, 5f) * Multiplier);
                 }
-
-                // 2)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-                if (Option == 2)
+                if (GameTime >= 60f && GameTime < 300f) // lets start to move a little more 
                 {
-                    Behavior_Decition = 2;
+                    Agrofeeling = Agrofeeling + (Random.Range(5f, 15f) * Multiplier);
                 }
-
-
-            }
-            if (Agrofeeling >= 15f && Agrofeeling < 30f)
-            {
-                //Soft posibilities -**-
-
-                // 1)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-                Behavior_Decition = 3;
-
-                // 2)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 3)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 4)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-
-            }
-            if (Agrofeeling >= 30f && Agrofeeling < 50f)
-            {
-                //Medium posibilities -***-
-
-                // 1)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 2)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 3)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 4)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                Behavior_Decition = 4;
-            }
-            if (Agrofeeling >= 50f && Agrofeeling < 100f)
-            {
-                //Hard posibilities -****-
-
-                // 1)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 2)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 3)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 4)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                Behavior_Decition = 4;
-            }
-            if (Agrofeeling >= 100f)
-            {
-                //Very Hard posibilities -*****-
-
-                // 1)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 2)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 3)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                // 4)I will give him space
-                // if Prota esta en un sector , me ire al mas alejado
-
-                Behavior_Decition = 99;
-            }
-            //else //Time to die -X-
-            //{
-            //    //Bloodlust Mode
-            //}
-
-            Behavior_Action(Behavior_Decition);
-
-        }
-
-        else
-        {
-            if (Behavior_Decition != 99)
-            {
-                if (Cooldown_Decition >= 0)
+                if (GameTime >= 300f && GameTime < 450f) // ......
                 {
-                    Cooldown_Decition = Cooldown_Decition - Time.deltaTime;
+                    Agrofeeling = Agrofeeling + (Random.Range(15f, 30f) * Multiplier);
                 }
-                else
+                //else // Enough of you....
+                //{
+                //    Agrofeeling = Agrofeeling + Random.Range(40f, 60f);
+                //}
+
+
+                //Limpieza de booleanos de accion
+
+                // ==>>>>>>>>>>>> CleanActions();
+
+
+                //My next move will be...
+
+                if (Agrofeeling < 15f)
                 {
-                    Behavior_Decition = 0;
-                    Cooldown_Decition = 0;
-                    if (visible == false)
+                    //chill posibilities -*-
+
+                    Option = Random.Range(1, 3); //cant opciones
+
+                    // 1)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+                    if (Option == 1)
                     {
-                        visible = true;
-                        agent.isStopped = false;
+                        Behavior_Decition = 1;
                     }
 
-                }
-            }
-            
-        }
+                    // 2)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+                    if (Option == 2)
+                    {
+                        Behavior_Decition = 2;
+                    }
 
-        if (target.position != Vector3.zero)
-        {
-            agent.SetDestination(target.position);
+
+                }
+                if (Agrofeeling >= 15f && Agrofeeling < 30f)
+                {
+                    //Soft posibilities -**-
+
+                    // 1)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+                    Behavior_Decition = 3;
+
+                    // 2)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 3)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 4)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+
+                }
+                if (Agrofeeling >= 30f && Agrofeeling < 50f)
+                {
+                    //Medium posibilities -***-
+
+                    // 1)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 2)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 3)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 4)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    Behavior_Decition = 4;
+                }
+                if (Agrofeeling >= 50f && Agrofeeling < 100f)
+                {
+                    //Hard posibilities -****-
+
+                    // 1)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 2)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 3)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 4)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    Behavior_Decition = 4;
+                }
+                if (Agrofeeling >= 100f)
+                {
+                    //Very Hard posibilities -*****-
+
+                    // 1)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 2)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 3)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    // 4)I will give him space
+                    // if Prota esta en un sector , me ire al mas alejado
+
+                    Behavior_Decition = 99;
+                }
+                //else //Time to die -X-
+                //{
+                //    //Bloodlust Mode
+                //}
+
+                Behavior_Action(Behavior_Decition);
+
+            }
+
+            else
+            {
+                if (Behavior_Decition != 99)
+                {
+                    if (Cooldown_Decition >= 0)
+                    {
+                        Cooldown_Decition = Cooldown_Decition - Time.deltaTime;
+                    }
+                    else
+                    {
+                        Behavior_Decition = 0;
+                        Cooldown_Decition = 0;
+                        if (visible == false)
+                        {
+                            visible = true;
+                            agent.isStopped = false;
+                        }
+
+                    }
+                }
+
+            }
+
+            if (target.position != Vector3.zero && Behavior_Decition != 99)
+            {
+                agent.SetDestination(target.position);
+            }
+            if (!visible)
+            {
+                agent.isStopped = true;
+            }
+
+            GameTime = GameTime + Time.deltaTime;
+
+            if (huntingMode)
+            {
+                HuntingBeavior();
+            }
+
         }
-        if (!visible)
+        else
         {
             agent.isStopped = true;
+            VictimTarged = false;
+            huntingMode = false;
+            Behavior_Decition = 0;
+            Cooldown_Decition = 0;
+
+            if (StunTime > 0)
+            {
+                StunTime -= 1f * Time.deltaTime;
+            }
+            else
+            {
+                agent.isStopped = false;
+                Stunned = false;
+            }
+
         }
+    }
 
-        GameTime = GameTime + Time.deltaTime;
-
-        if (huntingMode)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Stun"))
         {
-            HuntingBeavior();
+            Stunned = true;
+            StunTime = 3f;
         }
     }
 }
